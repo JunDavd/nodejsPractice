@@ -3,6 +3,7 @@ import express from 'express'
 import createError from 'http-errors'
 import logger from 'morgan'
 import * as homeController from './controlers/homeController.js'
+import { error } from 'node:console'
 
 const app = express()
 
@@ -29,7 +30,7 @@ app.use(express.static(path.join(import.meta.dirname,'public')))
 app.get('/',homeController.index)
 app.get('/param_in_route/:num?', homeController.paranInRoute)
 app.get('/param_in_route_multiple/:product/size/:size([0-9]+)/color/:color', homeController.paranInRouteMultiple)
-app.get('/param_in_route/:num?', homeController.paramInQuery)
+app.get('/param_in_query',homeController.validateParamInQueryQuery, homeController.paramInQuery)
 app.post('/post_with_body', homeController.postWithBody)
 //catch 404 and send error
 app.use((req,res,next) => {
@@ -41,6 +42,13 @@ app.use((req,res,next) => {
 
 //error handler
 app.use((err,req,res,next) => {
+    //manage validation errors
+    if (err.array){
+        err.message = 'Invalid reques:' + err.arr()
+        .map(e => `${e.location} ${e.type} ${e.path} ${e.msg}`)
+        .join(', ')
+        err.status = 422
+    }
     res.status(err.status || 500)
     // res.send('Ocurrio un error: ' + err.message) 
 

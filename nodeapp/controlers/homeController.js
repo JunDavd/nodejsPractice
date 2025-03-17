@@ -1,3 +1,4 @@
+import { query, validationResult } from "express-validator"
 
 export function index (req,res,next){
 
@@ -30,7 +31,18 @@ export function paranInRoute(req, res, next) {
     res.send(`quieres un ${product} de talla ${size} y color ${color}`)
   }
 
+  export const validateParamInQueryQuery = [
+    query('color')
+    // .notEmpty()
+    .custom(value => value === 'blue')
+    .withMessage('must be red or blue'),
+    query('talla')
+    .isNumeric()
+    .withMessage('must be numeric')
+  ]
+  ///param rojo
   export function paramInQuery(req,res,next){
+    validationResult(req).throw()
     const color = req.query.color
     res.send(`el color es ${color}`)
   }
