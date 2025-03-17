@@ -18,6 +18,7 @@ app.locals.appName = 'NodeApp'
 // })
 
 app.use(logger('dev'))
+app.use(express.urlencoded({extended: false}))
 app.use(express.static(path.join(import.meta.dirname,'public')))
 
 
@@ -29,6 +30,7 @@ app.get('/',homeController.index)
 app.get('/param_in_route/:num?', homeController.paranInRoute)
 app.get('/param_in_route_multiple/:product/size/:size([0-9]+)/color/:color', homeController.paranInRouteMultiple)
 app.get('/param_in_route/:num?', homeController.paramInQuery)
+app.post('/post_with_body', homeController.postWithBody)
 //catch 404 and send error
 app.use((req,res,next) => {
     // res.send('no encuentro lo que me pides')

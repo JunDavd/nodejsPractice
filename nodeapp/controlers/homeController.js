@@ -34,3 +34,14 @@ export function paranInRoute(req, res, next) {
     const color = req.query.color
     res.send(`el color es ${color}`)
   }
+
+  //posst with body
+
+  export function postWithBody(req,res,next){
+    // const age = req.body.age
+    // const color = req.body.color
+
+    const { age, color} = req.body
+
+    res.send('ok')
+  }
