@@ -18,6 +18,9 @@ app.locals.appName = 'NodeApp'
 //     next()
 // })
 
+/**
+ * Rutas generales
+ */
 app.use(logger('dev'))
 app.use(express.urlencoded({extended: false}))
 app.use(express.static(path.join(import.meta.dirname,'public')))
@@ -27,6 +30,14 @@ app.use(express.static(path.join(import.meta.dirname,'public')))
  * Application rutes
  */
 
+/**
+ * abajo la mayoria son rutas diferentes por lo
+ * que no es necesario poner next a cada una
+ * solo se pone next() cuando son multiples middlewares en una misma
+ * ruta. por ejemplo  esto en homecontroller.validateParamInquery debe ir 
+ * next() para poder pasar a paramInQuery, si no, no se ejecuta
+ *
+ */
 app.get('/',homeController.index)
 app.get('/param_in_route/:num?', homeController.paranInRoute)
 app.get('/param_in_route_multiple/:product/size/:size([0-9]+)/color/:color', homeController.paranInRouteMultiple)
