@@ -31,6 +31,7 @@ export function paranInRoute(req, res, next) {
     res.send(`quieres un ${product} de talla ${size} y color ${color}`)
   }
 
+  
   export const validateParamInQueryQuery = [
     query('color')
     // .notEmpty()
@@ -41,8 +42,13 @@ export function paranInRoute(req, res, next) {
     .withMessage('must be numeric')
   ]
   ///param rojo
+  // export function paramInQuery(req,res,next){
+  //   validationResult(req).throw()
+  //   const color = req.query.color
+  //   res.send(`el color es ${color}`)
+  // }
+
   export function paramInQuery(req,res,next){
-    validationResult(req).throw()
     const color = req.query.color
     res.send(`el color es ${color}`)
   }
@@ -57,3 +63,5 @@ export function paranInRoute(req, res, next) {
 
     res.send('ok')
   }
+
+
