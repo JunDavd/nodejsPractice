@@ -32,27 +32,27 @@ export function paranInRoute(req, res, next) {
   }
 
   
-  export const validateParamInQueryQuery = [
+  export const validateParamInQuery = [
     query('color')
-    // .notEmpty()
-    .custom(value => value === 'blue')
+    .notEmpty()
     .withMessage('must be red or blue'),
     query('talla')
     .isNumeric()
     .withMessage('must be numeric')
   ]
-  ///param rojo
-  // export function paramInQuery(req,res,next){
-  //   validationResult(req).throw()
-  //   const color = req.query.color
-  //   res.send(`el color es ${color}`)
-  // }
-
+  // .custom(value => value === 'blue')
+  // /param rojo
   export function paramInQuery(req,res,next){
+    validationResult(req).throw()
+
     const color = req.query.color
+
+    console.log(req.query)
+
     res.send(`el color es ${color}`)
   }
 
+ 
   //posst with body
 
   export function postWithBody(req,res,next){

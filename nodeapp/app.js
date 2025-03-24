@@ -3,7 +3,6 @@ import express from 'express'
 import createError from 'http-errors'
 import logger from 'morgan'
 import * as homeController from './controlers/homeController.js'
-import { error } from 'node:console'
 
 const app = express()
 
@@ -41,31 +40,32 @@ app.use(express.static(path.join(import.meta.dirname,'public')))
 app.get('/',homeController.index)
 app.get('/param_in_route/:num?', homeController.paranInRoute)
 app.get('/param_in_route_multiple/:product/size/:size([0-9]+)/color/:color', homeController.paranInRouteMultiple)
-app.get('/param_in_query',homeController.validateParamInQueryQuery, homeController.paramInQuery)
+app.get('/param_in_query',homeController.validateParamInQuery, homeController.paramInQuery)
 app.post('/post_with_body', homeController.postWithBody)
 //catch 404 and send error
 app.use((req,res,next) => {
-    // res.send('no encuentro lo que me pides')
-    // const error = new Error ('no encuentro lo que me pides')
-    // error.status = 404
     next(createError(404))
 })
 
 //error handler
 app.use((err,req,res,next) => {
     //manage validation errors
+
     if (err.array){
-        err.message = 'Invalid reques:' + err.arr()
+        err.message = 'invalid request : ' + err.array()
         .map(e => `${e.location} ${e.type} ${e.path} ${e.msg}`)
-        .join(', ')
+        .join(',')
+
         err.status = 422
     }
+    
     res.status(err.status || 500)
     // res.send('Ocurrio un error: ' + err.message) 
 
     //set locals, including error informartion in development 
     res.locals.message = err.message
-    res.locals.error = process.env.NODEAPP_ENV === 'develompment' ? err : {}
+    res.locals.error = process.env.NODEAPP_ENV === 'development' ? err : {}
     res.render('error')
 })
 export default app
+
