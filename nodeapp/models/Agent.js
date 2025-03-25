@@ -3,8 +3,7 @@ import mongoose, { mongo, Schema } from "mongoose"
 //definir el esquema de los agentes
 const agentSchema = new Schema({
     name: String,
-    age: Number,
-
+    age: {type: Number, min: 18, max: 130},
 },{
     collection: 'agentes' //para forzar el nombre de la colección 
 })

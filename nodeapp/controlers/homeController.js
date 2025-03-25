@@ -2,15 +2,22 @@ import { query, validationResult } from "express-validator"
 import Agent from "../models/Agent.js"
 
 export async function index (req,res,next){
+  try {
 
+    // throw new Error('fatall')
     res.locals.users = await Agent.find()
-
+  
     const now = new Date()
     res.locals.esPar = (now.getSeconds() % 2) === 0
     res.locals.segundoActual = now.getSeconds()
-
+  
     res.locals.codigo = '<script>alert("inyectado!!!")</script>'
     res.render('home')
+    
+  } catch (error) {
+    next(error)
+  }
+
 }
 
 // /param_in_route/45
