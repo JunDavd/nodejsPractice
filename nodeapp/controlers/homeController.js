@@ -5,7 +5,7 @@ export async function index (req,res,next){
   try {
 
     // throw new Error('fatall')
-    res.locals.users = await Agent.find()
+    res.locals.agents = await Agent.find()
   
     const now = new Date()
     res.locals.esPar = (now.getSeconds() % 2) === 0
