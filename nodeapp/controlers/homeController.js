@@ -16,14 +16,14 @@ export function index (req,res,next){
 }
 
 // /param_in_route/45
-export function paranInRoute(req, res, next) {
+export function paramInRoute(req, res, next) {
     const num = req.params.num
   
     res.send('me has pasado ' + num)
   }
   
   // /param_in_route_multiple/pantalon/size/M/color/blue
-  export function paranInRouteMultiple(req, res, next) {
+  export function paramInRouteMultiple(req, res, next) {
     const product = req.params.product
     const size = req.params.size
     const color = req.params.color
@@ -34,13 +34,15 @@ export function paranInRoute(req, res, next) {
   
   export const validateParamInQuery = [
     query('color')
-    .notEmpty()
+    .custom(value => {
+      return ['red','blue'].includes(value)
+    })
+    // .notEmpty()
     .withMessage('must be red or blue'),
     query('talla')
     .isNumeric()
     .withMessage('must be numeric')
   ]
-  // .custom(value => value === 'blue')
   // /param rojo
   export function paramInQuery(req,res,next){
     validationResult(req).throw()
