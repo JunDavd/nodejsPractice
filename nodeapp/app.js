@@ -2,8 +2,9 @@ import path from 'node:path'
 import express from 'express'
 import createError from 'http-errors'
 import logger from 'morgan'
-import * as homeController from './controlers/homeController.js'
 import connectMongoose from './lib/connect/mongoose.js'
+import * as homeController from './controlers/homeController.js'
+import * as loginController from './controlers/loginController.js'
 
 await connectMongoose()
 console.log('connected to MongoDB')
@@ -41,7 +42,16 @@ app.use(express.static(path.join(import.meta.dirname,'public')))
  * next() para poder pasar a paramInQuery, si no, no se ejecuta
  *
  */
+
+/**
+ * application rutes
+ */
 app.get('/',homeController.index)
+app.get('/login', loginController.index)
+
+/**
+ * Ejemplos rutas
+ */
 app.get('/param_in_route/:num?', homeController.paramInRoute)
 app.get('/param_in_route_multiple/:product/size/:size([0-9]+)/color/:color', homeController.paramInRouteMultiple)
 app.get('/param_in_query',homeController.validateParamInQuery, homeController.paramInQuery)
