@@ -48,6 +48,8 @@ app.use(express.static(path.join(import.meta.dirname,'public')))
  */
 app.get('/',homeController.index)
 app.get('/login', loginController.index)
+app.post('/login', loginController.postLogin)
+
 
 /**
  * Ejemplos rutas
