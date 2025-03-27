@@ -53,7 +53,8 @@ app.get('/',homeController.index)
 app.get('/login', loginController.index)
 app.post('/login', loginController.postLogin)
 app.get('/logout', loginController.logout)
-app.get('/agents/new', agentsController.index)
+app.get('/agents/new',sessionManager.guard, agentsController.index)
+app.post('/agents/new',sessionManager.guard ,agentsController.postNew)
 
 
 /**

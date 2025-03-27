@@ -10,6 +10,7 @@ export async function postLogin(req,res,next){
     try {
         const {email, password} = req.body
         // console.log(email, password)
+        const redir = req.query.redir
     
         //buscar usuario en la base de datos
         const user = await User.findOne({email: email})
@@ -25,7 +26,7 @@ export async function postLogin(req,res,next){
         //si el usuaro existe y la contraseña es buena--> redirect a la home
         req.session.userId = user.id 
     
-        res.redirect('/')
+        res.redirect(redir ? redir : '/')
         
     } catch (error) {
         
