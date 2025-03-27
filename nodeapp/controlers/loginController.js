@@ -9,7 +9,7 @@ export function index(req,res,next){
 export async function postLogin(req,res,next){
     try {
         const {email, password} = req.body
-        console.log(email, password)
+        // console.log(email, password)
     
         //buscar usuario en la base de datos
         const user = await User.findOne({email: email})
@@ -23,9 +23,22 @@ export async function postLogin(req,res,next){
         }
     
         //si el usuaro existe y la contraseña es buena--> redirect a la home
+        req.session.userId = user.id 
+    
         res.redirect('/')
         
     } catch (error) {
+        
         next(error)
     }
+}
+
+export function logout(req,res,next){
+    req.session.regenerate(err => {
+        if (err){
+            next(err)
+            return 
+        }
+        res.redirect('/')
+    })
 }

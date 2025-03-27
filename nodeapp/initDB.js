@@ -1,5 +1,5 @@
 import readline from 'node:readline/promises'
-import connectMongoose from "./lib/connect/mongoose.js"
+import connectMongoose from "./lib/connectMongoose.js"
 import Agent from "./models/Agent.js"
 import User from './models/User.js'
 

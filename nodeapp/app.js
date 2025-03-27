@@ -2,10 +2,10 @@ import path from 'node:path'
 import express from 'express'
 import createError from 'http-errors'
 import logger from 'morgan'
-import connectMongoose from './lib/connect/mongoose.js'
+import connectMongoose from './lib/connectMongoose.js'
 import * as homeController from './controlers/homeController.js'
 import * as loginController from './controlers/loginController.js'
-
+import * as sessionManager from './lib/sessionManager.js'
 await connectMongoose()
 console.log('connected to MongoDB')
 
@@ -46,9 +46,12 @@ app.use(express.static(path.join(import.meta.dirname,'public')))
 /**
  * application rutes
  */
+app.use(sessionManager.middleware)
+app.use(sessionManager.useSessionInViews)
 app.get('/',homeController.index)
 app.get('/login', loginController.index)
 app.post('/login', loginController.postLogin)
+app.get('/logout', loginController.logout)
 
 
 /**
