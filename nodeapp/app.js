@@ -6,6 +6,7 @@ import connectMongoose from './lib/connectMongoose.js'
 import * as homeController from './controlers/homeController.js'
 import * as loginController from './controlers/loginController.js'
 import * as sessionManager from './lib/sessionManager.js'
+import * as agentsController from './controlers/agentsController.js'
 await connectMongoose()
 console.log('connected to MongoDB')
 
@@ -52,6 +53,7 @@ app.get('/',homeController.index)
 app.get('/login', loginController.index)
 app.post('/login', loginController.postLogin)
 app.get('/logout', loginController.logout)
+app.get('/agents/new', agentsController.index)
 
 
 /**
