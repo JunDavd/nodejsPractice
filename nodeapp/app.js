@@ -55,6 +55,7 @@ app.post('/login', loginController.postLogin)
 app.get('/logout', loginController.logout)
 app.get('/agents/new',sessionManager.guard, agentsController.index)
 app.post('/agents/new',sessionManager.guard ,agentsController.postNew)
+app.get('/agents/delete/:agentId', sessionManager.guard, agentsController.deleteAgent)
 
 
 /**
