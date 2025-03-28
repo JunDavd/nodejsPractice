@@ -3,9 +3,10 @@ import Agent from "../models/Agent.js"
 
 export async function index (req,res,next){
   try {
-
-    // throw new Error('fatall')
-    res.locals.agents = await Agent.find()
+    
+    const userId = req.session.userId
+    
+    res.locals.agents = await Agent.find({owner: userId})
   
     const now = new Date()
     res.locals.esPar = (now.getSeconds() % 2) === 0
