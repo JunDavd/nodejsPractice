@@ -5,7 +5,8 @@ const agentSchema = new Schema({
     name: String,
     age: {type: Number, min: 18, max: 130},
     updated: {type: Date, default: Date.now},
-    owner: {type: Schema.Types.ObjectId, ref: 'User', index: true}
+    owner: {type: Schema.Types.ObjectId, ref: 'User', index: true},
+    avatar: String
 },{
     collection: 'agentes' //para forzar el nombre de la colección 
 })

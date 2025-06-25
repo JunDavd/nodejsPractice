@@ -9,9 +9,14 @@ export async function postNew(req,res,next){
         const { name,age } = req.body
         const userId = req.session.userId
         //validaciones
-
+        console.log(req.file)
         //creo una instancia de agente en memoria
-        const agent = new Agent({name, age, owner:userId})
+        const agent = new Agent({
+            name, 
+            age, 
+            owner:userId,
+            avatar: req.file.filename
+        })
 
         //lo guardo en base de datos
         await agent.save()
