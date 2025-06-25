@@ -5,8 +5,29 @@ export async function index (req,res,next){
   try {
     
     const userId = req.session.userId
+    //filters
+    const filterName = req.query.name
+    const filterAge = req.query.age
+//paginations
+    const limit = req.query.limit
+    const skip = req.query.skip
+
+    //sorting
+    const sort = req.query.sort
+
+    const filter = {
+      owner: userId
+    }
+
+    if(filterName){
+      filter.name = filterName
+    }
+
+    if(filterAge){
+      FileReader.age = filterAge
+    }
     
-    res.locals.agents = await Agent.find({owner: userId})
+    res.locals.agents = await Agent.list(filter,limit,skip,sort)
   
     const now = new Date()
     res.locals.esPar = (now.getSeconds() % 2) === 0

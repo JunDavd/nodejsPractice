@@ -11,6 +11,14 @@ const agentSchema = new Schema({
     collection: 'agentes' //para forzar el nombre de la colección 
 })
 
+agentSchema.statics.list = function(filter, limit, skip, sort){
+    const query = Agent.find(filter)
+    query.limit(limit)
+    query.skip(skip)
+    query.sort(sort)
+    return query.exec()
+}
+
 //crear el modelo
 const Agent = mongoose.model('Agent', agentSchema)
 
