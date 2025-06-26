@@ -8,6 +8,7 @@ import * as loginController from './controlers/loginController.js'
 import * as sessionManager from './lib/sessionManager.js'
 import * as agentsController from './controlers/agentsController.js'
 import * as localeController from './controlers/localeController.js'
+import * as apiAgentsController from './controlers/api/apiAgentsController.js'
 import upload from './lib/uploadConfigure.js'
 import i18n from './lib/i18nConfigure.js'
 import cookieParser from 'cookie-parser'
@@ -51,7 +52,13 @@ app.use(express.static(path.join(import.meta.dirname,'public')))
  */
 
 /**
- * application rutes
+ * API routes
+ */
+app.get('/api/agents', apiAgentsController.list)
+
+
+/**
+ * Webapplication rutes
  */
 app.use(cookieParser())
 app.use(sessionManager.middleware)

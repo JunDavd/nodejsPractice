@@ -24,7 +24,7 @@ export async function index (req,res,next){
     }
 
     if(filterAge){
-      FileReader.age = filterAge
+      filter.age = filterAge
     }
     
     res.locals.agents = await Agent.list(filter,limit,skip,sort)
