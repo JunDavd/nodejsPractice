@@ -65,6 +65,7 @@ export async function newAgent(req, res, next) {
     const agentData = req.body;
     //create agent in memory
     const agent = new Agent(agentData);
+    agent.avatar = req.file?.filename;
     //save agent
     const savedAgent = await agent.save();
 
