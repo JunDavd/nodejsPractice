@@ -74,3 +74,18 @@ export async function newAgent(req, res, next) {
     next(error);
   }
 }
+
+export async function upDate(req, res, next) {
+  try {
+    const agentId = req.params.agentId;
+    const agentData = req.body;
+    agentData.avatar = req.file?.filename;
+
+    const updatedAgent = await Agent.findByIdAndUpdate(agentId, agentData, {
+      new: true,
+    });
+    res.json({ result: updatedAgent });
+  } catch (error) {
+    next(error);
+  }
+}

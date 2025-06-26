@@ -55,6 +55,11 @@ app.use(express.static(path.join(import.meta.dirname, "public")));
 app.get("/api/agents", apiAgentsController.list);
 app.get("/api/agents/:agentId", apiAgentsController.getOne);
 app.post("/api/agents", upload.single("avatar"), apiAgentsController.newAgent);
+app.put(
+  "/api/agents/:agentId",
+  upload.single("avatar"),
+  apiAgentsController.upDate
+);
 
 /**
  * Webapplication rutes
