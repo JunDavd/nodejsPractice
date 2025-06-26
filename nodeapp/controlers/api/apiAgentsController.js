@@ -1,40 +1,75 @@
-import Agent from "../../models/Agent.js"
+import Agent from "../../models/Agent.js";
 
-export async function list(req, rest, next){
-    try {
+export async function list(req, rest, next) {
+  try {
+    //filters
+    //http://localhost:3000/api/agents?name=Smith
+    const filterName = req.query.name;
+    //http://localhost:3000/api/agents?age=33
+    const filterAge = req.query.age;
+    //paginations
+    //http://localhost:3000/api/agents?limit=2&skip=2
+    const limit = req.query.limit;
+    const skip = req.query.skip;
 
-        //filters
-        //http://localhost:3000/api/agents?name=Smith
-        const filterName = req.query.name
-        //http://localhost:3000/api/agents?age=33
-        const filterAge = req.query.age
-        //paginations
-        //http://localhost:3000/api/agents?limit=2&skip=2
-        const limit = req.query.limit
-        const skip = req.query.skip
+    //sorting
+    //http://localhost:3000/api/agents?sort=name
+    //http://localhost:3000/api/agents?sort=age%20name
 
-        //sorting
-        //http://localhost:3000/api/agents?sort=name
-        //http://localhost:3000/api/agents?sort=age%20name
-        
-        const sort = req.query.sort
+    const sort = req.query.sort;
 
-        const filter = {
-            // TODO implemente API authentication
-            // owner: userId
-        }
+    const fields = req.query.fields;
 
-        if(filterName){
-            filter.name = filterName
-        }
+    const widthCount = req.query.count === "true";
 
-        if(filterAge){
-            filter.age = filterAge
-        }
+    const filter = {
+      // TODO implemente API authentication
+      // owner: userId
+    };
 
-        const agents = await Agent.list(filter,limit,skip,sort)
-        rest.json({results: agents})
-    } catch (error) {
-        next(error)
+    if (filterName) {
+      filter.name = filterName;
     }
+
+    if (filterAge) {
+      filter.age = filterAge;
+    }
+
+    const agents = await Agent.list(filter, limit, skip, sort, fields);
+    const result = { results: agents };
+
+    if (widthCount) {
+      const count = await Agent.countDocuments(filter);
+      result.count = count;
+    }
+    rest.json(result);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getOne(req, res, next) {
+  try {
+    const agentId = req.params.agentId;
+
+    const agent = await Agent.findById(agentId);
+
+    res.json({ result: agent });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function newAgent(req, res, next) {
+  try {
+    const agentData = req.body;
+    //create agent in memory
+    const agent = new Agent(agentData);
+    //save agent
+    const savedAgent = await agent.save();
+
+    res.status(201).json({ result: savedAgent });
+  } catch (error) {
+    next(error);
+  }
 }

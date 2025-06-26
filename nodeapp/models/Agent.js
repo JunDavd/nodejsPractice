@@ -11,11 +11,12 @@ const agentSchema = new Schema({
     collection: 'agentes' //para forzar el nombre de la colección 
 })
 
-agentSchema.statics.list = function(filter, limit, skip, sort){
+agentSchema.statics.list = function(filter, limit, skip, sort,fields){
     const query = Agent.find(filter)
     query.limit(limit)
     query.skip(skip)
     query.sort(sort)
+    query.select(fields)
     return query.exec()
 }
 
