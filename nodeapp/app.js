@@ -60,7 +60,7 @@ app.put(
   upload.single("avatar"),
   apiAgentsController.upDate
 );
-
+app.delete("/api/agents/:agentId", apiAgentsController.deleteAgent);
 /**
  * Webapplication rutes
  */

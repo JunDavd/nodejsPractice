@@ -1,4 +1,6 @@
 import Agent from "../../models/Agent.js";
+import { unlink } from "node:fs/promises";
+import path from "node:path";
 
 export async function list(req, rest, next) {
   try {
@@ -85,6 +87,32 @@ export async function upDate(req, res, next) {
       new: true,
     });
     res.json({ result: updatedAgent });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function deleteAgent(req, res, next) {
+  try {
+    const agentId = req.params.agentId;
+    //remove avatar file if exists
+    const agent = await Agent.findById(agentId);
+    if (agent.avatar) {
+      await unlink(
+        path.join(
+          import.meta.dirname,
+          "..",
+          "..",
+          "public",
+          "avatars",
+          agent.avatar
+        )
+      );
+    }
+
+    await Agent.deleteOne({ _id: agentId });
+
+    res.json();
   } catch (error) {
     next(error);
   }
