@@ -7,8 +7,10 @@ import * as homeController from './controlers/homeController.js'
 import * as loginController from './controlers/loginController.js'
 import * as sessionManager from './lib/sessionManager.js'
 import * as agentsController from './controlers/agentsController.js'
+import * as localeController from './controlers/localeController.js'
 import upload from './lib/uploadConfigure.js'
 import i18n from './lib/i18nConfigure.js'
+import cookieParser from 'cookie-parser'
 
 
 await connectMongoose()
@@ -51,9 +53,11 @@ app.use(express.static(path.join(import.meta.dirname,'public')))
 /**
  * application rutes
  */
+app.use(cookieParser())
 app.use(sessionManager.middleware)
 app.use(sessionManager.useSessionInViews)
 app.use(i18n.init)
+app.get('/change-locale/:locale',localeController.changeLocale)
 app.get('/',homeController.index)
 app.get('/login', loginController.index)
 app.post('/login', loginController.postLogin)

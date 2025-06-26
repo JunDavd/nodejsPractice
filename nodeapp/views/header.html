@@ -24,6 +24,18 @@
                 <a class="nav-link active" href="/agents/new"><%= __('New agent') %></a>
               </li>
             </ul>
+
+
+            <%# lang selector %>
+
+            <div>
+              <% getLocales().forEach(locale => { %>
+                <a href="/change-locale/<%= locale %>">
+                <img src="/images/<%= locale %>.png" alt="<%= locale %>">
+              </a>
+              <% }) %>
+            </div>
+
             <% if (!session.userId) { %>
               <a href="/login" class="btn btn-success" type="submit"><%= __('Login') %></a>
               <%} else {%>
