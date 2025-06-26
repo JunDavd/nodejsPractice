@@ -33,7 +33,7 @@ export async function index (req,res,next){
     res.locals.esPar = (now.getSeconds() % 2) === 0
     res.locals.segundoActual = now.getSeconds()
   
-    res.locals.codigo = '<script>alert("inyectado!!!")</script>'
+    res.locals.codigo = `<script>alert("${res.__('injected')}!!!")</script>`
     res.render('home')
     
   } catch (error) {

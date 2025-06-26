@@ -18,16 +18,16 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/">Home</a>
+                <a class="nav-link active" aria-current="page" href="/"><%= __('Home') %></a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="/agents/new">New Agent</a>
+                <a class="nav-link active" href="/agents/new"><%= __('New agent') %></a>
               </li>
             </ul>
             <% if (!session.userId) { %>
-              <a href="/login" class="btn btn-success" type="submit">Login</a>
+              <a href="/login" class="btn btn-success" type="submit"><%= __('Login') %></a>
               <%} else {%>
-                <a href="/logout" class="btn btn-outline-success" type="submit">Logout</a>
+                <a href="/logout" class="btn btn-outline-success" type="submit"><%= __('Logout') %></a>
               <% } %>  
           </div>
         </div>

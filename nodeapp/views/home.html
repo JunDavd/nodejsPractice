@@ -4,7 +4,7 @@
     
     <%//contenido para usuarios no logeados  %>
     <% if (!session.userId) { %>
-        <p><a href="/login">Login</a>Login to acces your agents</p>
+        <p><a href="/login">Login</a><%= __('to acces your agents') %></p>
         <% }else { %>
             <h2><%= __('Agents') %></h2>
             <% agents.forEach(agent => { %>
@@ -19,13 +19,18 @@
         <% } %>                     
     
     <h2><%=__('Conditionals') %></h2>
-    <p>El segundo actual es <%= segundoActual %></p>
+    <p><%= __('Current second is') %> <%= segundoActual %></p>
     <% if (esPar){ %>
-        <p>El seguno actual es par</p>
+        <p><%= __('Current second is even') %></p>
     <% } else { %>
-        <p>El segundo actual es impar</p>
+        <p><%= __('Current second is odd') %></p>
     <% } %>
 
     <%= codigo %>
+    <h2><%= __('Pluralization example')  %></h2>
+    <p>0 <%= __n('Mouse', 0) %></p>
+    <p>1 <%= __n('Mouse', 1) %></p>
+    <p>2 <%= __n('Mouse', 2) %></p>
+    <p>3 <%= __n('Mouse', 3) %></p>
 
     <%- include('footer.html') %>

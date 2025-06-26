@@ -1,6 +1,25 @@
 {
 	"Conditionals": "Condicionales",
 	"Agents": "Agentes",
-	"{{name}} is {{age}} years old": "{{name}} tien {{age}} años"
-	
+	"{{name}} is {{age}} years old": "{{name}} tiene {{age}} años",
+	"Pluralization example": "Pluralization example",
+	"Mouse": {
+		"one": "Ratón",
+		"other": "Ratones"
+	},
+	"injected": "inyectado",
+	"Home": "Inicio",
+	"Logout": "Salir",
+	"Current second is": "El segundo actual es",
+	"Current second is odd": "El segundo actual impar",
+	"Current second is even": "El segundo actual es par",
+	"New agent": "Nuevo agente",
+	"New Agent": "Nuevo Agente",
+	"Name": "Nombre",
+	"Age": "Edad",
+	"Avatar": "Avatar",
+	"Submit": "Enviar",
+	"Login": "Login",
+	"to acces your agents": "para ver tus agentes",
+	"Email adress": "Dirección de email"
 }
