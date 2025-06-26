@@ -6,7 +6,7 @@
     <% if (!session.userId) { %>
         <p><a href="/login">Login</a>Login to acces your agents</p>
         <% }else { %>
-            <h2>Agentes</h2>
+            <h2><%= __('Agents') %></h2>
             <% agents.forEach(agent => { %>
         
                 <p>
@@ -18,7 +18,7 @@
             <% }) %> 
         <% } %>                     
     
-    <h2>Condicionales</h2>
+    <h2><%=__('Conditionals') %></h2>
     <p>El segundo actual es <%= segundoActual %></p>
     <% if (esPar){ %>
         <p>El seguno actual es par</p>

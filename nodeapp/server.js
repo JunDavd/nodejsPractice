@@ -1,7 +1,8 @@
+import 'dotenv/config'
+//alternativa a partir de node 22: node --env-file.env server.js
 
 import http from 'node:http'
 import app from './app.js'
-import { resolve } from 'node:path';
 
 const port = process.env.PORT || 3000
 

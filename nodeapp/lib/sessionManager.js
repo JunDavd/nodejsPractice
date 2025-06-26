@@ -6,12 +6,12 @@ const INACTIVITY_EXPIRATION_2_DAYS = 1000 * 60 * 60 * 24 * 2
 //middleware para gestionar sesiones
 export const middleware = session({
     name: 'nodeapp-session',
-    secret: 'PA(Q*=hd2Yy9{@saq$EkK!x<M>B+;ZpVHScW',
+    secret: process.env.SESSION_SECRET,
     saveUninitialized: true, //crea una sesion vacia a cada usuario
     resave: false,
     cookie: {maxAge: INACTIVITY_EXPIRATION_2_DAYS},
     store: MongoStore.create({
-        mongoUrl: 'mongodb://localhost/cursonode'
+        mongoUrl: process.env.MONGODB_CONNSTR
     })
 })
 

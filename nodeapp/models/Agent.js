@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose"
 
 //definir el esquema de los agentes
 const agentSchema = new Schema({
-    name: String,
+    name: {type: String, unique: true},
     age: {type: Number, min: 18, max: 130},
     updated: {type: Date, default: Date.now},
     owner: {type: Schema.Types.ObjectId, ref: 'User', index: true},
