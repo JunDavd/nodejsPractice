@@ -1,4 +1,6 @@
 {
 	"Conditionals": "Condicionales",
-	"Agents": "Agentes"
+	"Agents": "Agentes",
+	"{{name}} is {{age}} years old": "{{name}} tien {{age}} años"
+	
 }
