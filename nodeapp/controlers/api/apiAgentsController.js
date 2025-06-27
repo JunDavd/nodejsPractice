@@ -111,7 +111,6 @@ export async function deleteAgent(req, res, next) {
     }
 
     await Agent.deleteOne({ _id: agentId });
-
     res.json();
   } catch (error) {
     next(error);

@@ -12,6 +12,7 @@ import * as apiAgentsController from "./controlers/api/apiAgentsController.js";
 import upload from "./lib/uploadConfigure.js";
 import i18n from "./lib/i18nConfigure.js";
 import cookieParser from "cookie-parser";
+import swaggerMiddleware from "./lib/swaggerMiddleware.js";
 
 await connectMongoose();
 console.log("connected to MongoDB");
@@ -85,6 +86,7 @@ app.get(
   sessionManager.guard,
   agentsController.deleteAgent
 );
+app.use("/api-doc", swaggerMiddleware);
 
 /**
  * Ejemplos rutas
