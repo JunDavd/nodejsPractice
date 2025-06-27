@@ -9,6 +9,7 @@ import * as sessionManager from "./lib/sessionManager.js";
 import * as agentsController from "./controlers/agentsController.js";
 import * as localeController from "./controlers/localeController.js";
 import * as apiAgentsController from "./controlers/api/apiAgentsController.js";
+import * as apiLoginController from "./controlers/api/apiLoginController.js";
 import upload from "./lib/uploadConfigure.js";
 import i18n from "./lib/i18nConfigure.js";
 import cookieParser from "cookie-parser";
@@ -53,6 +54,7 @@ app.use(express.static(path.join(import.meta.dirname, "public")));
 /**
  * API routes
  */
+app.post("/api/login", apiLoginController.loginJWT);
 app.get("/api/agents", apiAgentsController.list);
 app.get("/api/agents/:agentId", apiAgentsController.getOne);
 app.post("/api/agents", upload.single("avatar"), apiAgentsController.newAgent);
