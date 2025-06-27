@@ -2,6 +2,16 @@ import Agent from "../../models/Agent.js";
 import { unlink } from "node:fs/promises";
 import path from "node:path";
 
+/**
+ *
+ * /api/agentes
+ * get:
+ *  description:
+ *      Return list of agents
+ *    parameters:
+ *      -in: body
+ */
+
 export async function list(req, rest, next) {
   try {
     //filters
