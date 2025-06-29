@@ -15,6 +15,7 @@ import i18n from "./lib/i18nConfigure.js";
 import cookieParser from "cookie-parser";
 import swaggerMiddleware from "./lib/swaggerMiddleware.js";
 import * as jwtAuth from "./lib/jwtAuthMiddleware.js";
+import basicAuthMiddleware from "./lib/basicAuthMiddleware.js";
 
 await connectMongoose();
 console.log("connected to MongoDB");
@@ -83,7 +84,7 @@ app.use(sessionManager.middleware);
 app.use(sessionManager.useSessionInViews);
 app.use(i18n.init);
 app.get("/change-locale/:locale", localeController.changeLocale);
-app.get("/", homeController.index);
+app.get("/", basicAuthMiddleware, homeController.index);
 app.get("/login", loginController.index);
 app.post("/login", loginController.postLogin);
 app.get("/logout", loginController.logout);
