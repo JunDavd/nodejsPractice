@@ -14,6 +14,7 @@ import upload from "./lib/uploadConfigure.js";
 import i18n from "./lib/i18nConfigure.js";
 import cookieParser from "cookie-parser";
 import swaggerMiddleware from "./lib/swaggerMiddleware.js";
+import * as jwtAuth from "./lib/jwtAuthMiddleware.js";
 
 await connectMongoose();
 console.log("connected to MongoDB");
@@ -55,15 +56,25 @@ app.use(express.static(path.join(import.meta.dirname, "public")));
  * API routes
  */
 app.post("/api/login", apiLoginController.loginJWT);
-app.get("/api/agents", apiAgentsController.list);
-app.get("/api/agents/:agentId", apiAgentsController.getOne);
-app.post("/api/agents", upload.single("avatar"), apiAgentsController.newAgent);
+app.get("/api/agents", jwtAuth.guard, apiAgentsController.list);
+app.get("/api/agents/:agentId", jwtAuth.guard, apiAgentsController.getOne);
+app.post(
+  "/api/agents",
+  jwtAuth.guard,
+  upload.single("avatar"),
+  apiAgentsController.newAgent
+);
 app.put(
   "/api/agents/:agentId",
   upload.single("avatar"),
+  jwtAuth.guard,
   apiAgentsController.upDate
 );
-app.delete("/api/agents/:agentId", apiAgentsController.deleteAgent);
+app.delete(
+  "/api/agents/:agentId",
+  jwtAuth.guard,
+  apiAgentsController.deleteAgent
+);
 /**
  * Webapplication rutes
  */

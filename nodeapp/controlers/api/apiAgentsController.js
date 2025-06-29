@@ -1,6 +1,7 @@
 import Agent from "../../models/Agent.js";
 import { unlink } from "node:fs/promises";
 import path from "node:path";
+import createError from "http-errors";
 
 /**
  *
@@ -14,6 +15,8 @@ import path from "node:path";
 
 export async function list(req, rest, next) {
   try {
+    const userId = req.apiUserId;
+    console.log(userId);
     //filters
     //http://localhost:3000/api/agents?name=Smith
     const filterName = req.query.name;
@@ -35,8 +38,7 @@ export async function list(req, rest, next) {
     const widthCount = req.query.count === "true";
 
     const filter = {
-      // TODO implemente API authentication
-      // owner: userId
+      owner: userId,
     };
 
     if (filterName) {
@@ -63,8 +65,9 @@ export async function list(req, rest, next) {
 export async function getOne(req, res, next) {
   try {
     const agentId = req.params.agentId;
+    const userId = req.apiUserId;
 
-    const agent = await Agent.findById(agentId);
+    const agent = await Agent.findOne({ _id: agentId, owner: userId });
 
     res.json({ result: agent });
   } catch (error) {
@@ -75,9 +78,11 @@ export async function getOne(req, res, next) {
 export async function newAgent(req, res, next) {
   try {
     const agentData = req.body;
+    const userId = req.apiUserId;
     //create agent in memory
     const agent = new Agent(agentData);
     agent.avatar = req.file?.filename;
+    agent.owner = userId;
     //save agent
     const savedAgent = await agent.save();
 
@@ -90,12 +95,20 @@ export async function newAgent(req, res, next) {
 export async function upDate(req, res, next) {
   try {
     const agentId = req.params.agentId;
+    const userId = req.apiUserId;
     const agentData = req.body;
     agentData.avatar = req.file?.filename;
 
-    const updatedAgent = await Agent.findByIdAndUpdate(agentId, agentData, {
-      new: true,
-    });
+    const updatedAgent = await Agent.findOneAndUpdate(
+      {
+        _id: agentId,
+        owner: userId,
+      },
+      agentData,
+      {
+        new: true,
+      }
+    );
     res.json({ result: updatedAgent });
   } catch (error) {
     next(error);
@@ -105,8 +118,28 @@ export async function upDate(req, res, next) {
 export async function deleteAgent(req, res, next) {
   try {
     const agentId = req.params.agentId;
+    const userId = req.apiUserId;
+    //Comprobar si el agente es propiedad del usuario
+    //validar
     //remove avatar file if exists
     const agent = await Agent.findById(agentId);
+    //comprobar que existe
+    if (!agent) {
+      console.log(
+        `WARNING! USER ${userId} is trying to delete no existing agent`
+      );
+      return next(createError(404));
+    }
+
+    //comprobar la propiedad
+
+    if (agent.owner.toString() !== userId) {
+      console.log(
+        `WARNING! USER ${userId} is trying to delete agents of other users`
+      );
+      return next(createError(401));
+    }
+
     if (agent.avatar) {
       await unlink(
         path.join(
